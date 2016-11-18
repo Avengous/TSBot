@@ -261,7 +261,7 @@ registerPlugin({
             sinusbot.setNick(nickTitle + seperator + nickArtist);
         }
 
-        var fullyCleaned = rawTitle + ", by " + rawArtist;
+        var fullyCleaned = rawArtist + ' - ' + rawTitle;
 
         // Announce over TTS if desired
         if(config.ttsAnnounce == 0){
