@@ -13,7 +13,7 @@ registerPlugin({
  type: 'select',
  options: [
  'Nothing',
- 'Donwload',
+ 'Download',
  'Play'
  ]
  },
