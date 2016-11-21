@@ -47,30 +47,30 @@ registerPlugin({
 				url: get_champions_url.format({
 					api_key: config.apiKey
 				})
-			}
-		}, function(err, res) {
+			}, function(err, res) {
             if (err) {
                 send_msg(ev, "API Request error");
                 sinusbot.log(err);
-            } else {
+            }
+			else {
                 if (res.statusCode == 200) {
-                    var data = JSON.parse(res.data)
+                    var data = JSON.parse(res.data);
+				}
+		}
 		
  		sinusbot.on('chat', function(ev) {
 			if(ev.msg == config.command){				
 				var msg = config.message;
 				
-				for champion in data['data'] {
-					chatChannel(champion)
+				for (champion in data['data']) {
+					chatChannel(champion);
 				}
 				
-				result = 'TestString'
+				result = 'TestString';
 				msg = msg.replace('%n', ev.clientNick);
 				msg = msg.replace('%r', result);					
 				chatChannel(msg);
 			}
  		 });
-		 
-		 
-		 
+
  	 });
