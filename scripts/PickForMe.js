@@ -56,6 +56,7 @@ registerPlugin({
                 if (res.statusCode == 200) {
                     var data = JSON.parse(res.data);
 				}
+			}});
 		}
 		
  		sinusbot.on('chat', function(ev) {
