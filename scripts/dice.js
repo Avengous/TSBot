@@ -1,13 +1,12 @@
 registerPlugin({
  name: '!dice',
- version: '1.0',
- description: 'roll a dice!',
- author: 'GetMeOutOfHere',
+ version: '1.1',
+ description: 'Rolls a die',
+ author: 'GetMeOutOfHere, modified by Avengous',
  vars: {
-		diceSides: {
-		 title: 'number of sides',
-		 type: 'select',
-	 options: ['4', '6', '8', '10', '12', '20']
+		diceMax: {
+		 title: 'Max value of die',
+		 type: 'int'
 		},
 
 		message: {
@@ -20,35 +19,18 @@ registerPlugin({
 },	function (sinusbot, config)	{
 					
 		 sinusbot.on('chat', function(ev) {
-						
-						var dice = 4;						
-						switch (config.diceSides) {
-							case 1:
-								dice = 6;
-								break;
-							case 2:
-								dice = 8;
-								break;
-							case 3:
-								dice = 10;
-								break;
-							case 4:
-								dice = 12;
-								break;
-							case 5:
-								dice = 20;
-								break;
-						}
 
 					if(ev.msg == '!dice')
 					{
-												
+						var max = config.diceMax;
 						var min = 1;
-						var result = Math.round(Math.random() * (dice - min)) + min;
+						var result = Math.random() * (max - min) + min;
 						var msg = config.message;
+						
 						msg = msg.replace('%n', ev.clientNick);
-						msg = msg.replace('%d', dice);
-						msg = msg.replace('%r', result);					
+						msg = msg.replace('%d', max);
+						msg = msg.replace('%r', result);	
+						
 						chatChannel(msg);
 						
 					}
