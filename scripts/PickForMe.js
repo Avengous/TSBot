@@ -38,13 +38,39 @@ registerPlugin({
  		}
   }
  
- },	function (sinusbot, config)	{		
+ },	function (sinusbot, config)	{
+		var get_champions_url = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key={api_key}'
+
+		function getChampionList() {
+			sinusbot.http({
+				method: 'GET',
+				url: get_champions_url.format({
+					api_key: config.apiKey
+				})
+			}
+		}, function(err, res) {
+            if (err) {
+                send_msg(ev, "API Request error");
+                sinusbot.log(err);
+            } else {
+                if (res.statusCode == 200) {
+                    var data = JSON.parse(res.data)
+		
  		sinusbot.on('chat', function(ev) {
-			if(ev.msg == config.command){					
+			if(ev.msg == config.command){				
 				var msg = config.message;
+				
+				for champion in data['data'] {
+					chatChannel(champion)
+				}
+				
+				result = 'TestString'
 				msg = msg.replace('%n', ev.clientNick);
 				msg = msg.replace('%r', result);					
 				chatChannel(msg);
 			}
  		 });
+		 
+		 
+		 
  	 });
