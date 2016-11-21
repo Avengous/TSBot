@@ -53,14 +53,15 @@ registerPlugin({
 			else {
                 if (res.statusCode == 200) {
                     var data = JSON.parse(res.data);
+		    return data
 				}
 			}});
 		}
 		
  		sinusbot.on('chat', function(ev) {
-			if(ev.msg == config.command){				
+			if(ev.msg == '-pickforme'){				
 				var msg = config.message;
-				
+				var data = getChampionList()	
 				for (champion in data['data']) {
 					chatChannel(champion);
 				}
