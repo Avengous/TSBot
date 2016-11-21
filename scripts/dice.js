@@ -1,12 +1,12 @@
 registerPlugin({
- name: '!dice',
+ name: 'Magic Dice',
  version: '1.1',
  description: 'Rolls a die',
- author: 'GetMeOutOfHere, modified by Avengous',
+ author: 'GetMeOutOfHere, Avengous',
  vars: {
 		diceMax: {
 		 title: 'Max value of die',
-		 type: 'int'
+		 type: 'string'
 		},
 
 		message: {
@@ -24,7 +24,7 @@ registerPlugin({
 					{
 						var max = config.diceMax;
 						var min = 1;
-						var result = Math.random() * (max - min) + min;
+						var result = Math.floor(Math.random() * (max - min) + min);
 						var msg = config.message;
 						
 						msg = msg.replace('%n', ev.clientNick);
