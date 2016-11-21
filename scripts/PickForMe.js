@@ -44,9 +44,7 @@ registerPlugin({
 		function getChampionList() {
 			sinusbot.http({
 				method: 'GET',
-				url: get_champions_url.format({
-					api_key: config.apiKey
-				})
+				url: get_champions_url.replace('{api_key}', config.apiKey)
 			}, function(err, res) {
             if (err) {
                 send_msg(ev, "API Request error");
