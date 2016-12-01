@@ -24,6 +24,11 @@ registerPlugin({
             type: 'track',
             placeholder: 'Search for track...'
         },
+        trackStephen: {
+            title: 'Sound File for Stephen:',
+            type: 'track',
+            placeholder: 'Search for track...'
+        },
         resume: {
             title: 'Resume last track or stream after it dongs doc:',
             type: 'select',
@@ -111,6 +116,20 @@ registerPlugin({
                     sinusbot.play(config.trackNeda.url + '&callback=welcomesound&copy=true');
                 } else {
                     sinusbot.play(config.trackNeda.url);
+                }
+            }
+            if (ev.clientUid == '5VrnNFtWvpcWRQadUBGqpMYZ0rI=') {
+                sinusbot.log("Welcome-Sound starting...");
+                if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackStephen.url))) {
+                    resumePlayback = true;
+                    resumeTrack = sinusbot.getCurrentTrack();
+                    resumePos = sinusbot.getPos();
+                    sinusbot.play(config.trackStephen.url + '&callback=welcomesound&copy=true');
+                } else if (resumePlayback) {
+                    securejoin = false;
+                    sinusbot.play(config.trackStephen.url + '&callback=welcomesound&copy=true');
+                } else {
+                    sinusbot.play(config.trackStephen.url);
                 }
             }
         }
