@@ -51,10 +51,8 @@ registerPlugin({
     }
 
     sinusbot.on('clientMove', function(ev) {
-        var userName = ev.clientNick;
-        
         if (ev.newChannel == sinusbot.getCurrentChannelId()) {
-            if (userName.indexOf('Doc') >= 0) {
+            if (ev.clientUid == 'wD8quZdUyGOBCONc7/FBcKve+3U=') {
                 sinusbot.log("Welcome-Sound starting...");
                 if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackDoc.url))) {
                     resumePlayback = true;
@@ -68,7 +66,7 @@ registerPlugin({
                     sinusbot.play(config.trackDoc.url);
                 }
             }
-            if (userName.indexOf('Shock') >= 0 || userName.indexOf('Dabe') >= 0 ) {
+            if (ev.clientUid == 'jtwX1kZSG4CnD2BRpnrlhaMNSk4=' || ev.clientUid == 'jbta7xGs0Q3Q2B+1G388MCmPaXo=') {
                 sinusbot.log("Welcome-Sound starting...");
                 if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackShock.url))) {
                     resumePlayback = true;
@@ -82,7 +80,7 @@ registerPlugin({
                     sinusbot.play(config.trackShock.url);
                 }
             }
-            if (userName.indexOf('vengous') >= 0) {
+            if (ev.clientUid == 'iHkPTzEw+WI5dBr9esCXS+Z8Yoo=' || ev.clientUid == 'mZkDMgo9bSDAegu1rUZcKhcVZVo=') {
                 sinusbot.log("Welcome-Sound starting...");
                 if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackAvengous.url))) {
                     resumePlayback = true;
