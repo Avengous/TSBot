@@ -1,11 +1,21 @@
 registerPlugin({
  name: 'WelcomeDong',
- version: '1.0',
- description: 'This script will let the bot greet Doc with a track and resume the last track or stream.',
+ version: '1.1',
+ description: 'This script will let the bot greet the Dongers with a track and resume the last track or stream.',
  author: 'Shock',
     vars: {
-        track: {
-            title: 'Sound File:',
+        trackDoc: {
+            title: 'Sound File for Doc:',
+            type: 'track',
+            placeholder: 'Search for track...'
+        },
+        trackShock: {
+            title: 'Sound File for Shock:',
+            type: 'track',
+            placeholder: 'Search for track...'
+        },
+        trackAvengous: {
+            title: 'Sound File for Avengous:',
             type: 'track',
             placeholder: 'Search for track...'
         },
@@ -19,7 +29,7 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config) {
-    if (!config || !config.track) {
+    if (!config || !config.trackDoc || !config.trackShock || !config.trackAvengous) {
       sinusbot.log("Settings invalid.");
       return;
     }
@@ -46,16 +56,44 @@ registerPlugin({
         if (ev.newChannel == sinusbot.getCurrentChannelId()) {
             if (userName.indexOf('Doc') >= 0) {
                 sinusbot.log("Welcome-Sound starting...");
-                if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.track.url))) {
+                if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackDoc.url))) {
                     resumePlayback = true;
                     resumeTrack = sinusbot.getCurrentTrack();
                     resumePos = sinusbot.getPos();
-                    sinusbot.play(config.track.url + '&callback=welcomesound&copy=true');
+                    sinusbot.play(config.trackDoc.url + '&callback=welcomesound&copy=true');
                 } else if (resumePlayback) {
                     securejoin = false;
-                    sinusbot.play(config.track.url + '&callback=welcomesound&copy=true');
+                    sinusbot.play(config.trackDoc.url + '&callback=welcomesound&copy=true');
                 } else {
-                    sinusbot.play(config.track.url);
+                    sinusbot.play(config.trackDoc.url);
+                }
+            }
+            if (userName.indexOf('Shock') >= 0 || userName.indexOf('Dabe') >= 0 ) {
+                sinusbot.log("Welcome-Sound starting...");
+                if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackShock.url))) {
+                    resumePlayback = true;
+                    resumeTrack = sinusbot.getCurrentTrack();
+                    resumePos = sinusbot.getPos();
+                    sinusbot.play(config.trackShock.url + '&callback=welcomesound&copy=true');
+                } else if (resumePlayback) {
+                    securejoin = false;
+                    sinusbot.play(config.trackShock.url + '&callback=welcomesound&copy=true');
+                } else {
+                    sinusbot.play(config.trackShock.url);
+                }
+            }
+            if (userName.indexOf('vengous') >= 0) {
+                sinusbot.log("Welcome-Sound starting...");
+                if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackAvengous.url))) {
+                    resumePlayback = true;
+                    resumeTrack = sinusbot.getCurrentTrack();
+                    resumePos = sinusbot.getPos();
+                    sinusbot.play(config.trackAvengous.url + '&callback=welcomesound&copy=true');
+                } else if (resumePlayback) {
+                    securejoin = false;
+                    sinusbot.play(config.trackAvengous.url + '&callback=welcomesound&copy=true');
+                } else {
+                    sinusbot.play(config.trackAvengous.url);
                 }
             }
         }
