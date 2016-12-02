@@ -29,6 +29,11 @@ registerPlugin({
             type: 'track',
             placeholder: 'Search for track...'
         },
+        trackJohnny: {
+            title: 'Sound File for Johnny:',
+            type: 'track',
+            placeholder: 'Search for track...'
+        },
         resume: {
             title: 'Resume last track or stream after it dongs doc:',
             type: 'select',
@@ -130,6 +135,20 @@ registerPlugin({
                     sinusbot.play(config.trackStephen.url + '&callback=welcomesound&copy=true');
                 } else {
                     sinusbot.play(config.trackStephen.url);
+                }
+            }
+            if (ev.clientUid == 'ulmt1EwtK2zYtszdxADKSqKfmt4=') {
+                sinusbot.log("Welcome-Sound starting...");
+                if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackJohnny.url))) {
+                    resumePlayback = true;
+                    resumeTrack = sinusbot.getCurrentTrack();
+                    resumePos = sinusbot.getPos();
+                    sinusbot.play(config.trackJohnny.url + '&callback=welcomesound&copy=true');
+                } else if (resumePlayback) {
+                    securejoin = false;
+                    sinusbot.play(config.trackJohnny.url + '&callback=welcomesound&copy=true');
+                } else {
+                    sinusbot.play(config.trackJohnny.url);
                 }
             }
         }
