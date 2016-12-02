@@ -95,7 +95,7 @@ registerPlugin({
                     sinusbot.play(config.trackShock.url);
                 }
             }
-            if (ev.clientUid == 'iHkPTzEw+WI5dBr9esCXS+Z8Yoo=' || ev.clientUid == 'mZkDMgo9bSDAegu1rUZcKhcVZVo=') {
+            if (ev.clientUid == 'iHkPTzEw+WI5dBr9esCXS+Z8Yoo=' || ev.clientUid == 'mZkDMgo9bSDAegu1rUZcKhcVZVo=' || ev.clientUid == 'P8SJ9N2mOB95ea28VTemp6R+fTM=' || ev.clientUid == 'MEi5ikPXFX9pbn8i1ljNrZexrH4=') {
                 sinusbot.log("Welcome-Sound starting...");
                 if (config.resume && sinusbot.playing() && (sinusbot.getCurrentTrack().uuid != "" || sinusbot.getCurrentTrack().type == 'url') && (sinusbot.getCurrentTrack().uuid != getUUID(config.trackAvengous.url))) {
                     resumePlayback = true;
