@@ -54,17 +54,18 @@ registerPlugin({
     var resumePos = 0;
     var securejoin = true;
 
-	var uuids = {
-		'Doc': 'wD8quZdUyGOBCONc7/FBcKve+3U=',
-		'Shock-Work': 'jtwX1kZSG4CnD2BRpnrlhaMNSk4=',
-		'Shock': 'jbta7xGs0Q3Q2B+1G388MCmPaXo=',
-		'Avengous-Work': 'iHkPTzEw+WI5dBr9esCXS+Z8Yoo=',
-		'Avengous': 'mZkDMgo9bSDAegu1rUZcKhcVZVo=',
-		'Neda': 'hs7mtyhEWfPybOSYkr2lpocC6xI=',
-		'Stephen': '5VrnNFtWvpcWRQadUBGqpMYZ0rI=',
-		'Johnny': 'ulmt1EwtK2zYtszdxADKSqKfmt4=',
-		'Ryan': '3WbX91stVo4dCcI6nXUnCJ4seaw='
-	}
+    var uuids = {
+	'Doc': 'wD8quZdUyGOBCONc7/FBcKve+3U=',
+	'Shock-Work': 'jtwX1kZSG4CnD2BRpnrlhaMNSk4=',
+	'Shock': 'jbta7xGs0Q3Q2B+1G388MCmPaXo=',
+	'Avengous-Work': 'iHkPTzEw+WI5dBr9esCXS+Z8Yoo=',
+	'Avengous-Mobile': 'mZkDMgo9bSDAegu1rUZcKhcVZVo=',
+	'Avengous': 'P8SJ9N2mOB95ea28VTemp6R+fTM=',
+	'Neda': 'hs7mtyhEWfPybOSYkr2lpocC6xI=',
+	'Stephen': '5VrnNFtWvpcWRQadUBGqpMYZ0rI=',
+	'Johnny': 'ulmt1EwtK2zYtszdxADKSqKfmt4=',
+	'Ryan': '3WbX91stVo4dCcI6nXUnCJ4seaw='
+    }
 
     var getUUID = function (url) {
         var match = url.match(/track:\/\/(\.)?(.[^/:]+)/i);
@@ -103,6 +104,8 @@ registerPlugin({
 				return config.trackAvengous.url;
 			case uuids['Avengous']:
 				return config.trackAvengous.url;
+			case uuids['Avengous-Mobile']:
+				return config.trackAvengous.url;
 			case uuids['Neda']:
 				return config.trackNeda.url;
 			case uuids['Stephen']:
@@ -132,6 +135,9 @@ registerPlugin({
 					welcomeDong(uuids['Avengous-Work']);
 					break;
 				case uuids['Avengous']:
+					welcomeDong(uuids['Avengous']);
+					break;
+				case uuids['Avengous-Mobile']:
 					welcomeDong(uuids['Avengous']);
 					break;
 				case uuids['Neda']:
