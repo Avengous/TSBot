@@ -21,7 +21,7 @@
 registerPlugin({
   name: 'RitoPls',
   version: '1.0',
-  description: 'Placeholder',
+  description: 'Collection of League of Legends related commands.',
   author: 'Avengous',
   vars: {
                 apiKey: {
@@ -38,6 +38,9 @@ registerPlugin({
 				// API URLs
                 var get_champions_url = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key={api_key}';
 				var get_summoner_by_name = 'https://na.api.pvp.net/api/lol/{region}/v1.4/summoner/by-name/{name}?api_key={api_key}';
+				
+				// Constants
+				var msg_random_champion = "Doc's Donger has chosen [B][COLOR=#ff0000]%r[/COLOR][/B] for %n!"
 				
 				// SinusBot
 				function sendRequest(method, url) {
@@ -57,7 +60,15 @@ registerPlugin({
 				}
 				
 				// RitoPls
-				function getRandomChampion() {
+				function getHelp(ev) {
+					var msg_help = \
+					"Command		Description \n" + \
+					"!help			Displays this message \n" + \
+					"!pickforme		Selects a random champion for you \n";
+					sinusbot.chatPrivate(ev.clientId, msg_help);
+				}		
+				
+				function getRandomChampion(ev) {
 					var data = sendRequest('GET', get_champions_url)
 					var rand_int = Math.floor(Math.random() * Object.keys(data.data).length);
 					var champions = [];
@@ -67,7 +78,7 @@ registerPlugin({
 						i += 1; 
 					}
 					result = champions[rand_int];
-					msg = msg.replace('%n', ev.clientNick);
+					msg = msg_random_champion.replace('%n', ev.clientNick);
 					msg = msg.replace('%r', result);
 					sinusbot.chatChannel(msg);
 				}
@@ -75,8 +86,8 @@ registerPlugin({
 				// Command Reciever
                 sinusbot.on('chat', function(ev) {
 					switch (ev.msg) {
-						case '!test_random':
-							getChampion(config.message, ev);
+						case '!pickforme':
+							getRandomChampion(ev);
 							break;
 					}
                  });
