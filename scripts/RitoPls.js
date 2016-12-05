@@ -24,10 +24,6 @@ registerPlugin({
   description: 'Placeholder',
   author: 'Avengous',
   vars: {
-                command: {
-                        title: 'Command String',
-                        type: 'string',
-                },
                 apiKey: {
                         title: 'Riot API Key',
                         type: 'string',
@@ -58,7 +54,6 @@ registerPlugin({
 				// Riot API
 				function getSummonerByName(name, region) {
 					var url = get_summoner_by_name.replace('{region}', config.region);
-					
 				}
 				
 				// RitoPls
@@ -79,9 +74,11 @@ registerPlugin({
 				
 				// Command Reciever
                 sinusbot.on('chat', function(ev) {
-                        if(ev.msg == config.command){
-                                getChampion(config.message, ev);
-                        }
+					switch (ev.msg) {
+						case '!test_random':
+							getChampion(config.message, ev);
+							break;
+					}
                  });
 
          });
