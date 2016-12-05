@@ -43,7 +43,7 @@ registerPlugin({
 				function sendRequest(method, url) {
 					sinusbot.http({
 						"method": method,
-						"url": url.replace.('{api_key}', config.apiKey),
+						"url": url.replace('{api_key}', config.apiKey),
 						"timeout": 10000,
 						"headers": [{"Content-Type": "application/json"}]
 					}, function (error, response) {
