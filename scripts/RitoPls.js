@@ -44,6 +44,7 @@ registerPlugin({
 				
 				// SinusBot
 				function sendRequest(req, url) {
+					var res = '';
 					sinusbot.http({
 						method: req,
 						url: url.replace('{api_key}', config.apiKey),
@@ -53,10 +54,10 @@ registerPlugin({
 						   if (error) {
 							   sinusbot.log(error)
 						   } else {
-							   	sinusbot.log(response)
-								return JSON.parse(response.data);
+								 res = JSON.parse(response.data);
 						   }
 					   });
+					return res
 				}
 				
 				// Riot API
@@ -67,10 +68,10 @@ registerPlugin({
 				// RitoPls
 				function getHelp(ev) {
 					var msg_help = "\n" +
-					"Command					Description \n" +
-					"!ritopls					Displays this message \n" +
-					"!pickforme					Selects a random champion for you \n" +
-					"!summoner <name>			N/A Displays summoner information. \n";
+					"Command    Description \n" +
+					"!ritopls    Displays this message \n" +
+					"!pickforme    Selects a random champion for you \n" +
+					"!summoner <name>    N/A Displays summoner information. \n";
 					sinusbot.chatPrivate(ev.clientId, msg_help);
 				}		
 				
