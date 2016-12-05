@@ -53,6 +53,7 @@ registerPlugin({
 						   if (error) {
 							   sinusbot.log(error)
 						   } else {
+							   	sinusbot.log(response)
 								return JSON.parse(response.data);
 						   }
 					   });
@@ -75,7 +76,7 @@ registerPlugin({
 				
 				function getRandomChampion(ev) {
 					var data = sendRequest('GET', get_champions_url)
-					var rand_int = Math.floor(Math.random() * Object.keys(data).length);
+					var rand_int = Math.floor(Math.random() * Object.keys(data.data).length);
 					var champions = [];
 					var i = 0;
 					for (var champion in data.data) {
