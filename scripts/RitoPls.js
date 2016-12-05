@@ -43,14 +43,18 @@ registerPlugin({
 				var msg_random_champion = "Doc's Donger has chosen [B][COLOR=#ff0000]%r[/COLOR][/B] for %n!"
 				
 				// SinusBot
-				function sendRequest(method, url) {
+				function sendRequest(req, url) {
 					sinusbot.http({
-						"method": method,
-						"url": url.replace('{api_key}', config.apiKey),
-						"timeout": 10000,
-						"headers": [{"Content-Type": "application/json"}]
+						method: req,
+						url: url.replace('{api_key}', config.apiKey),
+						timeout: 10000,
+						headers: [{"Content-Type": "application/json"}]
 					}, function (error, response) {
-						   return JSON.parse(response.data);
+						   if (error) {
+							   sinusbot.log(error)
+						   } else {
+								return JSON.parse(response.data);
+						   }
 					   });
 				}
 				
@@ -61,11 +65,11 @@ registerPlugin({
 				
 				// RitoPls
 				function getHelp(ev) {
-					var msg_help =
-					"Command			Description \n" +
-					"!ritopls			Displays this message \n" +
-					"!pickforme			Selects a random champion for you \n" +
-					"!summoner <name>	N/A Displays summoner information. \n";
+					var msg_help = "\n" +
+					"Command					Description \n" +
+					"!ritopls					Displays this message \n" +
+					"!pickforme					Selects a random champion for you \n" +
+					"!summoner <name>			N/A Displays summoner information. \n";
 					sinusbot.chatPrivate(ev.clientId, msg_help);
 				}		
 				
