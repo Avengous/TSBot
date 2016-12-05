@@ -61,10 +61,10 @@ registerPlugin({
 				
 				// RitoPls
 				function getHelp(ev) {
-					var msg_help = \
-					"Command			Description \n" + \
-					"!ritopls			Displays this message \n" + \
-					"!pickforme			Selects a random champion for you \n" + \
+					var msg_help =
+					"Command			Description \n" +
+					"!ritopls			Displays this message \n" +
+					"!pickforme			Selects a random champion for you \n" +
 					"!summoner <name>	N/A Displays summoner information. \n";
 					sinusbot.chatPrivate(ev.clientId, msg_help);
 				}		
