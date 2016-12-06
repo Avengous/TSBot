@@ -17,7 +17,7 @@
  * @author Giovanni Schuoler <xxstryderxx@hotmail.com>
  *
  */
-
+ 
 registerPlugin({
   name: 'RitoPls',
   version: '1.0',
@@ -35,8 +35,6 @@ registerPlugin({
   }
 
  },     function (sinusbot, config){
-				var request_data;
-	 
 				// API URLs
                 var get_champions_url = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key={api_key}';
 				var get_summoner_by_name = 'https://na.api.pvp.net/api/lol/{region}/v1.4/summoner/by-name/{name}?api_key={api_key}';
@@ -46,18 +44,12 @@ registerPlugin({
 				
 				// SinusBot
 				function sendRequest(req, url) {
-					sinusbot.http({
+					return sinusbot.http({
 						method: req,
 						url: url.replace('{api_key}', config.apiKey),
 						timeout: 10000,
 						headers: [{"Content-Type": "application/json"}]
-					}, function (error, response) {
-						   if (error) {
-							   sinusbot.log(error)
-						   } else {
-								request_data = JSON.parse(response.data);
-						   }
-					   });
+					});
 				}
 				
 				// Riot API
@@ -76,7 +68,7 @@ registerPlugin({
 				}		
 				
 				function getRandomChampion(ev) {
-					sendRequest('GET', get_champions_url)
+					sinusbot.log(sendRequest('GET', get_champions_url))
 					var rand_int = Math.floor(Math.random() * Object.keys(request_data.data).length);
 					var champions = [];
 					var i = 0;
