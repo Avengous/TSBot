@@ -35,6 +35,8 @@ registerPlugin({
   }
 
  },     function (sinusbot, config){
+				var request_data;
+	 
 				// API URLs
                 var get_champions_url = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key={api_key}';
 				var get_summoner_by_name = 'https://na.api.pvp.net/api/lol/{region}/v1.4/summoner/by-name/{name}?api_key={api_key}';
@@ -44,7 +46,6 @@ registerPlugin({
 				
 				// SinusBot
 				function sendRequest(req, url) {
-					var res = '';
 					sinusbot.http({
 						method: req,
 						url: url.replace('{api_key}', config.apiKey),
@@ -54,10 +55,9 @@ registerPlugin({
 						   if (error) {
 							   sinusbot.log(error)
 						   } else {
-								 res = JSON.parse(response.data);
+								request_data = JSON.parse(response.data);
 						   }
 					   });
-					return res
 				}
 				
 				// Riot API
@@ -76,11 +76,11 @@ registerPlugin({
 				}		
 				
 				function getRandomChampion(ev) {
-					var data = sendRequest('GET', get_champions_url)
-					var rand_int = Math.floor(Math.random() * Object.keys(data.data).length);
+					sendRequest('GET', get_champions_url)
+					var rand_int = Math.floor(Math.random() * Object.keys(request_data.data).length);
 					var champions = [];
 					var i = 0;
-					for (var champion in data.data) {
+					for (var champion in request_data.data) {
 						champions[i] = champion;
 						i += 1; 
 					}
