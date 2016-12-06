@@ -52,15 +52,11 @@ registerPlugin({
 					};
 				}
 				
-				function httpCallback(error, response) {
-					LastResponse = response;
+				function verifyResponse(response) {
 					if (response.statusCode != 200) {
 						sinusbot.log(JSON.parse(response.data));
-						return;
 					}
-					return JSON.parse(response.data);
 				}
-				
 				
 				// Riot API
 				function getSummonerByName(name, region) {
@@ -78,18 +74,23 @@ registerPlugin({
 				}		
 				
 				function getRandomChampion(ev) {
-					sinusbot.log(Object.keys(sinusbot.http(httpOps, httpCallback)));
-					var rand_int = Math.floor(Math.random() * Object.keys(data.data).length);
-					var champions = [];
-					var i = 0;
-					for (var champion in data.data) {
-						champions[i] = champion;
-						i += 1; 
-					}
-					result = champions[rand_int];
-					msg = msg_random_champion.replace('%n', ev.clientNick);
-					msg = msg.replace('%r', result);
-					sinusbot.chatChannel(msg);
+					sinusbot.http(httpOps('GET', get_champions_url),
+						function (err, res) {
+							verifyResponse(res);
+							var data = JSON.parse(res.data);
+							var rand_int = Math.floor(Math.random() * Object.keys(data.data).length);
+							var champions = [];
+							var i = 0;
+							for (var champion in data.data) {
+								champions[i] = champion;
+								i += 1; 
+							}
+							result = champions[rand_int];
+							msg = msg_random_champion.replace('%n', ev.clientNick);
+							msg = msg.replace('%r', result);
+							sinusbot.chatChannel(msg);
+						}
+					);
 				}
 				
 				// Command Reciever
