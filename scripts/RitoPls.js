@@ -43,14 +43,24 @@ registerPlugin({
 				var msg_random_champion = "Doc's Donger has chosen [B][COLOR=#ff0000]%r[/COLOR][/B] for %n!"
 				
 				// SinusBot
-				function sendRequest(req, url) {
-					return sinusbot.http({
+				function httpOps(req, url) {
+					return {
 						method: req,
 						url: url.replace('{api_key}', config.apiKey),
 						timeout: 10000,
 						headers: [{"Content-Type": "application/json"}]
-					});
+					};
 				}
+				
+				function httpCallback(error, response) {
+					LastResponse = response;
+					if (response.statusCode != 200) {
+						sinusbot.log(JSON.parse(response.data));
+						return;
+					}
+					return JSON.parse(response.data);
+				}
+				
 				
 				// Riot API
 				function getSummonerByName(name, region) {
@@ -68,11 +78,11 @@ registerPlugin({
 				}		
 				
 				function getRandomChampion(ev) {
-					sinusbot.log(sendRequest('GET', get_champions_url))
-					var rand_int = Math.floor(Math.random() * Object.keys(request_data.data).length);
+					sinusbot.log(Object.keys(sinusbot.http(httpOps, httpCallback)));
+					var rand_int = Math.floor(Math.random() * Object.keys(data.data).length);
 					var champions = [];
 					var i = 0;
-					for (var champion in request_data.data) {
+					for (var champion in data.data) {
 						champions[i] = champion;
 						i += 1; 
 					}
