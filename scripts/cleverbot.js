@@ -71,7 +71,7 @@ registerPlugin({
         var mode = ev.mode;
         
         if (ev.mode == 0 || ev.mode == 3) return;
-        if (ev.msg.indexOf("Cleverbot,") === 0 || ev.msg.indexOf("@cleverbot") === 0) {
+        if (ev.msg.indexOf("Cleverbot,") === 0 || ev.msg.indexOf("@docsdonger") === 0) {
             var question = ev.msg.substring(11, ev.msg.length);
             sinusbot.http({
                 "method": "POST", 
@@ -98,6 +98,7 @@ registerPlugin({
                 } 
                 else if (mode == 2) {
                     sinusbot.say(response, lang);
+					sinusbot.chatChannel(response);
                 }
             });
         }

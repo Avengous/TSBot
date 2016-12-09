@@ -35,15 +35,18 @@ registerPlugin({
   }
 
  },     function (sinusbot, config){
+				var last_request;
 				// API URLs
                 var get_champions_url = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key={api_key}';
 				var get_summoner_by_name = 'https://na.api.pvp.net/api/lol/{region}/v1.4/summoner/by-name/{name}?api_key={api_key}';
+				var get_league = 'https://na.api.pvp.net/api/lol/{region}/v2.5/league/by-summoner/{summoner_id}?api_key={api_key}'
 				
 				// Constants
 				var msg_random_champion = "Doc's Donger has chosen [B][COLOR=#ff0000]%r[/COLOR][/B] for %n!"
 				
 				// SinusBot
 				function httpOps(req, url) {
+					console.log('httpOps: ' + url.replace('{api_key}', config.apiKey));
 					return {
 						method: req,
 						url: url.replace('{api_key}', config.apiKey),
@@ -52,15 +55,61 @@ registerPlugin({
 					};
 				}
 				
-				function verifyResponse(response) {
-					if (response.statusCode != 200) {
-						sinusbot.log(JSON.parse(response.data));
-					}
+				function sendRequest(method, url) {
+					console.log('sendRequest: ' + url);
+					var status_code;
+					var data;
+//					do {
+						sinusbot.http(httpOps(method, url),
+							function callback(err, res) {
+								console.log('Error: \n' + err);
+								console.log('Res: \n' + res);
+								console.log('ResData: \n' + res.data);
+								status_code = res.statusCode;
+								data = res.data;
+							}
+						);
+//					} while (status_code != 200);
+					return data;
 				}
 				
 				// Riot API
-				function getSummonerByName(name, region) {
+				function getSummonerIdByName(name) {
 					var url = get_summoner_by_name.replace('{region}', config.region);
+					url = url.replace('{name}', name);
+					data = sendRequest('GET', url);
+					console.log('getSummonerIdByName: ' + data);
+					return data[Object.keys(data)[0]]['id'];
+				}
+/*					var url = get_summoner_by_name.replace('{region}', config.region);
+					url = url.replace('{name}', name);
+					sinusbot.http(httpOps('GET', url),
+						function (err, res) {
+							data = JSON.parse(res.data);
+							last_request = data[Object.keys(data)[0]]['id'];
+						}
+					);
+					return last_request;
+				}*/
+				
+				function xxxgetLeaguesById(id) {
+					var url = get_league.replace().replace('{region}', config.region);
+					url = url.replace('{summoner_id}', id);
+					sinusbot.http(httpOps('GET', url),
+						function (err, res) {
+							data = res.data;
+							last_request = data;
+						}
+					)
+					return last_request;
+				}
+				
+				function getLeaguesById(id) {
+					var url = get_league.replace().replace('{region}', config.region);
+					url = url.replace('{summoner_id}', id);
+					console.log('getLeaguesById: ' + url); //REMOVE
+					data = sendRequest('GET', url);
+					console.log(data);
 				}
 				
 				// RitoPls
@@ -69,14 +118,13 @@ registerPlugin({
 					"Command    Description \n" +
 					"!ritopls    Displays this message \n" +
 					"!pickforme    Selects a random champion for you \n" +
-					"!summoner <name>    N/A Displays summoner information. \n";
+					"!rank <name>    N/A Displays summoner information. \n";
 					sinusbot.chatPrivate(ev.clientId, msg_help);
 				}		
 				
 				function getRandomChampion(ev) {
 					sinusbot.http(httpOps('GET', get_champions_url),
 						function (err, res) {
-							verifyResponse(res);
 							var data = JSON.parse(res.data);
 							var rand_int = Math.floor(Math.random() * Object.keys(data.data).length);
 							var champions = [];
@@ -93,14 +141,30 @@ registerPlugin({
 					);
 				}
 				
+				function getSummonerRank(ev, name) {
+					var id = getSummonerIdByName(name);
+					data = getLeaguesById(id);
+					data = data;
+					for (var key in data) {
+						if (data.hasOwnProperty(key)) {
+							sinusbot.log(data[key]);
+						}
+					}
+					sinusbot.chatPrivate(ev.clientId, id);
+				}
+				
 				// Command Reciever
                 sinusbot.on('chat', function(ev) {
-					switch (ev.msg) {
+					msg = ev.msg.split(' ')
+					switch (msg[0]) {
 						case '!ritopls':
 							getHelp(ev);
 							break;
 						case '!pickforme':
 							getRandomChampion(ev);
+							break;
+						case '!rank':
+							getSummonerRank(ev, msg[1]);
 							break;
 					}
                  });
