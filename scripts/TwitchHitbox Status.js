@@ -347,9 +347,7 @@ registerPlugin({ // jshint ignore:line
 		} else {
 			datacheck = data.stream;
 		}
-		
-		result += " <https://www.twitch.tv/" + name + ">";
-		
+			
 		switch (key.mode) {
 			case 0: //Server
 				if (datacheck != key.lastState) {
